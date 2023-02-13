@@ -2,34 +2,35 @@
   <main>
     <div>
       <!-- Un formulaire pour saisir les valeurs de la catégorie à ajouter -->
-      <form @submit.prevent="ajouteCategorie">
+      <form @submit.prevent="ajouteProduit">
         <div>
-          <input id="libelle" v-model="data.formulaireCategorie.libelle" placeholder="Libelle" />
+          <input id="libelle" v-model="data.formulaireProduit.nom" placeholder="Le nom du produit" />
         </div>
         <div>
-          <input id="description" v-model="data.formulaireCategorie.description" placeholder="Description" />
+          <input id="description" v-model="data.formulaireProduit.prixUntaire" placeholder="Le prix unitaire" />
         </div>
         <button type="submit">Ajouter</button>
       </form>
     </div>
     <div>
       <table>
-        <caption>Liste des catégories</caption>
+        <caption>Liste des produits - page {{data.page.number + 1}} / {{data.page.totalPages}}</caption>
         <tr>
-          <th>Code</th>
-          <th>Libelle</th>
-          <th>Description</th>
-          <th>Action</th>
+          <th>Nom</th>
+          <th>Prix</th>
+          <th>Stock</th>
+          <th>Commandé</th>
         </tr>
         <!-- Si le tableau des catégories est vide -->
-        <tr v-if="!data.listeCategories">
+        <tr v-if="!data.listeProduits">
           <td colspan="4">Veuillez patienter, chargement des catégories...</td>
         </tr>
         <!-- Si le tableau des catégories n'est pas vide -->
-        <tr v-for="produit in data.listeCategories" :key="categorie.code">
-          <td>{{ produit.code }}</td>
-          <td>{{ produit.libelle }}</td>
-          <td>{{ produit.description }}</td>
+        <tr v-for="produit in data.listeProduits" :key="produit.reference">
+          <td>{{ produit.nom }}</td>
+          <td>{{ produit.prixUnitaire }}</td>
+          <td>{{ produit.unitesEnStock }}</td>
+          <td>{{ produit.unitesCommandees }}</td>
           <td>
             <button @click="firstPage(data.links.first.href)">
               La première page
